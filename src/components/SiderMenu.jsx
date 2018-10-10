@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Menu, Icon, Layout } from 'antd';
+import { NavLink } from 'react-router-dom';
 const SubMenu = Menu.SubMenu;
 const MenuItem = Menu.Item;
 const { Sider } = Layout;
@@ -22,8 +23,10 @@ class SiderMenu extends Component {
                     defaultOpenKeys={[openKeys]}
                 >
                     <MenuItem key="/app/task">
-                        <Icon type="video-camera" />
-                        <span>任务列表</span>
+                        <NavLink to="/app/task">
+                            <Icon type="video-camera" />
+                            <span>任务列表</span>
+                        </NavLink>
                     </MenuItem>
                     <SubMenu key="nav1" title={<span><Icon type="mail"/><span>导航1</span></span>}>
                         <MenuItem key="/app/user">

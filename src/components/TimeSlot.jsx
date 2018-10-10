@@ -37,6 +37,7 @@ class TimeSlot extends Component {
                             mode='date'
                             showTime
                             onChange={this.changeStartDate}
+                            className="width-300"
                         />
                     )
                 }
@@ -50,6 +51,7 @@ class TimeSlot extends Component {
                             mode='date'
                             showTime
                             onChange={this.changeEndDate}
+                            className="width-300"
                         />
                     )
                 }

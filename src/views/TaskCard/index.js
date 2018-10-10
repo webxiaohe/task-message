@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import SearchList from '../../components/SearchList';
 import { Divider, Button, Modal } from 'antd';
 import TableList from '../../components/TableList';
-import TaskCardAdd from '../../components/TaskCardAdd';
 import { request, biz } from '../../library/wjs';
 import moment from 'moment';
 const bizApi = biz.api;
@@ -10,27 +9,30 @@ class TaskList extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            pageSize: 2,
+            pageSize: 5,
             current: 1,
             total: 3,
             data: [],
-            visible: false
         }
     }
     handleSearch = (value) => {
-        console.log(value)
+        const { pageSize } = this.state;
+        const searchParams = {
+            title: value.title || '',
+            startTime: value.startTime || '',
+            endTime: value.endTime || ''
+        }
+        this.getList(Object.assign(searchParams, {limit: pageSize, offset: 1}));
     }
     componentDidMount () {
         const { current, pageSize } = this.state;
         this.getList({offset: current, limit: pageSize});
     }
     handleEdit (record) {
-        console.log(record)
+        this.props.history.push('/task/edit', {detailId: record.id});
     }
-    showModal = () => {
-        this.setState({
-            visible: true,
-        })
+    handleAdd = () => {
+        this.props.history.push('/task/edit');
     }
     getList = (data) => {
         request.get(bizApi.TaskCardListUrl, data).then((data) => {
@@ -55,37 +57,33 @@ class TaskList extends Component {
             }
         })
     }
+    handleReset = () => {
+        const { pageSize } = this.state;
+        this.getList({offset: 1, limit: pageSize});
+        this.setState({
+            current: 1
+        })
+    }
     changePage = (page, pageSize) => {
         this.setState({
             current: page
         })
         this.getList({offset: page, limit: pageSize});
     }
-    handleOk = () => {
-        this.setState({
-            visible: false,
-        });
-    }
-    
-    handleCancel = () => {
-        this.setState({
-            visible: false,
-        });
-    }
     render () {
-        const { current, pageSize, total, data, visible } = this.state;
+        const { current, pageSize, total, data } = this.state;
         const fieldsList = [
             {
                 label: '任务名称',
-                fieldname: 'taskName',
+                fieldname: 'title',
                 type: 'input'
             }, {
                 label: '开始时间',
-                fieldname: 'startDate',
+                fieldname: 'startTime',
                 type: 'startDate'
             }, {
                 label: '结束时间',
-                fieldname: 'endDate',
+                fieldname: 'endTime',
                 type: 'endDate'
             }
         ];
@@ -126,16 +124,8 @@ class TaskList extends Component {
         }
         return (
             <div className="task-container">
-                <SearchList fieldsList={fieldsList} handleSearch={this.handleSearch} handleAdd={this.showModal.bind(this)}/>
+                <SearchList fieldsList={fieldsList} handleSearch={this.handleSearch} handleAdd={this.handleAdd} handleReset={this.handleReset}/>
                 <TableList columns={columns} dataSource={data} pagination={pagination} />
-                <Modal
-                    title="添加任务卡"
-                    visible={visible}
-                    onOk={this.handleOk}
-                    onCancel={this.handleCancel}
-                >
-                    <TaskCardAdd />
-                </Modal>
             </div>
         )
     }

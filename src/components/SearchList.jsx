@@ -14,12 +14,13 @@ class SearchList extends Component {
         e.preventDefault();
         const { form: {validateFields}, handleSearch } = this.props;
         validateFields((err, values) => {
-            values.startDate = values.startDate ? values.startDate.format('YYYY-MM-DD') : '';
-            values.endDate = values.endDate ? values.endDate.format('YYYY-MM-DD') : '';
+            values.startTime = values.startTime ? values.startTime.format('YYYY-MM-DD') : '';
+            values.endTime = values.endTime ? values.endTime.format('YYYY-MM-DD') : '';
             handleSearch(values);
         });
     }
     handleReset = () => {
+        this.props.handleReset();
         this.props.form.resetFields();
     }
     getFields = () => {
@@ -39,7 +40,7 @@ class SearchList extends Component {
                                 <DatePicker
                                     mode='date'
                                     showTime
-                                    onChange={this.changeStartDate}
+                                    // onChange={this.changeStartDate}
                                 />
                             )
                         }
@@ -48,7 +49,7 @@ class SearchList extends Component {
                                 <DatePicker
                                     mode='date'
                                     showTime
-                                    onChange={this.changeEndDate}
+                                    // onChange={this.changeEndDate}
                                 />
                             )
                         }
