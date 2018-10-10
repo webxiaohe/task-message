@@ -73,16 +73,20 @@ class SearchList extends Component {
         })
     }
     render () {
+        const { handleAdd } = this.props;
         return (
             <Form onSubmit={this.handleSearch}>
                 <Row gutter={24}>
                     {this.getFields()}
                 </Row>
                 <Row>
-                    <Col span={24} style={{ textAlign: 'right' }}>
+                    <Col style={{ textAlign: 'right' }}>
                         <Button type="primary" htmlType="submit" icon="search">搜索</Button>
-                        <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
+                        <Button type="primary" icon="sync" style={{ marginLeft: 8 }} onClick={this.handleReset}>
                             重置
+                        </Button>
+                        <Button type="primary" icon="plus" style={{ marginLeft: 8 }} onClick={handleAdd}>
+                            添加
                         </Button>
                     </Col>
                 </Row>

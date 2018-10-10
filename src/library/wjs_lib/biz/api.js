@@ -6,7 +6,7 @@ module.exports = () => {
         //开发环境
         test : {
             path : "47.92.0.84",
-            port : "7001"
+            port : "7008"
         },
         //生产环境
         product : {

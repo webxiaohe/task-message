@@ -5,7 +5,7 @@ const bizConst = require('./biz/const');
 module.exports = {
     //解析参数
     requestVerify: function (obj, url) {
-        let _url = url + '?';
+        let _url = url + '&';
         for (let p in obj) {
         _url += p + "=" + obj[p] + "&";
         }
@@ -40,15 +40,16 @@ module.exports = {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + cookie.get(bizConst.passportToken)
+                'Authorization': 'Bearer ' + cookie.get(bizConst.passportToken),
+                'Access-Control-Allow-Origin': '*'
             },
             method: 'GET'
         };
+        url = this.wrapUrl(url);
         let len = this.objLength(data);
         if (len >= 1) {
             url = this.requestVerify(data, url)
         };
-        url = this.wrapUrl(url);
         return new Promise((resolve, reject) => {
 
             fetch(url, op)
@@ -74,11 +75,11 @@ module.exports = {
             credentials: 'include',
             method: 'GET'
         };
+        url = this.wrapUrl(url);
         let len = this.objLength(data);
         if (len >= 1) {
             url = this.requestVerify(data, url)
         };
-        url = this.wrapUrl(url);
         return new Promise((resolve, reject) => {
 
             fetch(url, op)

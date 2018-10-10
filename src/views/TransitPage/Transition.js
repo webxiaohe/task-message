@@ -5,13 +5,16 @@ import wjs from '../../library/wjs';
 class Transition extends Component {
 
     componentDidMount() {
-        this.waitLogin();
+        setInterval(() => {
+            this.waitLogin();
+        }, 500)
     }
 
     waitLogin() {
         console.log(wjs.auth.isLogined())
         if (wjs.auth.isLogined()) {
             var redirectUrl = wjs.utils.getQueryParam("redirect");
+            console.log(redirectUrl)
             var isNullOrEmpty = wjs.utils.isNullOrEmpty(redirectUrl)
             if (isNullOrEmpty || redirectUrl.endsWith(':3000') || redirectUrl.endsWith(':3000/')) {
                 window.location.href = "/app/task";
@@ -23,11 +26,7 @@ class Transition extends Component {
             // } else {
             //     window.location.href = redirectUrl;
             // }
-        } else {
-            setTimeout(()=>{
-                this.waitLogin(); 
-            }, 500);
-        }
+        } 
     }
 
     render() {

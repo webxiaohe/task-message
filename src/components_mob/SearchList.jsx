@@ -27,8 +27,8 @@ class SearchList extends Component {
         const children = [];
         fieldsList.map((item, index) => {
             children.push(
-                <Row>
-                    <Col span={24} key={index}>
+                <Row key={index}>
+                    <Col span={24}>
                         <FormItem label={item.label}>
                             {
                                 item.type === 'input' && getFieldDecorator(item.fieldname)(

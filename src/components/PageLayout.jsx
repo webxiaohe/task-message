@@ -8,7 +8,7 @@ class PageLayout extends Component {
         return (
             <Route {...rest} render={(matchProps)=>{
                 return (!wjs.auth.isLogined() && needAuth) ? (
-                        <Redirect to="/login"/>
+                        <Redirect to="/"/>
                     ) : (
                         <App Child={child} {...matchProps}/>
                     )
